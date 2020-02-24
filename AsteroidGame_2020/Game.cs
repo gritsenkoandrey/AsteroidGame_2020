@@ -41,5 +41,14 @@ namespace AsteroidGame_2020
             Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
             Buffer.Render();
         }
+        public static BaseObject[] _objs;
+        public static void Load()
+        {
+            _objs = new BaseObject[30];
+            for (int i = 0; i < _objs.Length; i++)
+            {
+                _objs[i] = new BaseObject(new Point(600, i*20), new Point(i-15, i-15), new Size(20, 20));
+            }
+        }
     }
 }
