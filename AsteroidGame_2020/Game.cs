@@ -31,7 +31,16 @@ namespace AsteroidGame_2020
             Width = form.ClientSize.Width;
             Height = form.ClientSize.Height;
             // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
-            Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));            
+            Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
+
+            Timer timer = new Timer { Interval = 100 };
+            timer.Start();
+            timer.Tick += Timer_tick;
+        }
+        public static void Timer_tick(object sender, EventArgs e)
+        {
+            Draw();
+            Update();
         }
         public static void Draw()
         {
