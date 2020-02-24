@@ -31,7 +31,7 @@ namespace AsteroidGame_2020
             Width = form.ClientSize.Width;
             Height = form.ClientSize.Height;
             // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
-            Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
+            Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));            
         }
         public static void Draw()
         {
@@ -39,6 +39,13 @@ namespace AsteroidGame_2020
             Buffer.Graphics.Clear(Color.Black);
             Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
             Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
+            Buffer.Render();
+
+            Buffer.Graphics.Clear(Color.Black);
+            foreach(BaseObject obj in _objs)
+            {
+                obj.Draw();                
+            }
             Buffer.Render();
         }
         public static BaseObject[] _objs;
@@ -49,6 +56,11 @@ namespace AsteroidGame_2020
             {
                 _objs[i] = new BaseObject(new Point(600, i*20), new Point(i-15, i-15), new Size(20, 20));
             }
+        }
+        public static void Update()
+        {
+            foreach (BaseObject obj in _objs)
+                obj.Update();
         }
     }
 }
