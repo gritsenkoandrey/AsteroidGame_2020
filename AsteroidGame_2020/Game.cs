@@ -60,11 +60,13 @@ namespace AsteroidGame_2020
         public static BaseObject[] _objs;
         public static void Load()
         {           
-            _objs = new BaseObject[30];
-            for (int i = 0; i < _objs.Length / 2; i++)
-                _objs[i] = new BaseObject(new Point(600, i * 20), new Point(-i, -i), new Size(10, 10));
-            for (int i = _objs.Length / 2; i < _objs.Length; i++)
+            _objs = new BaseObject[60];
+            for (int i = 0; i < _objs.Length/3; i++)
+                _objs[i] = new BaseObject(new Point(600, i * 20), new Point(15-i, 20-i), new Size(10, 10));
+            for (int i = _objs.Length/3; i < _objs.Length-_objs.Length / 3; i++)
                 _objs[i] = new Star(new Point(600, i * 20), new Point(-i, 0), new Size(5, 5));
+            for (int i = _objs.Length - _objs.Length / 3; i < _objs.Length; i++)
+                _objs[i] = new Rectangles(new Point(600, i), new Point(20-i, 20-i), new Size(1, 1));
         }
         public static void Update()
         {
