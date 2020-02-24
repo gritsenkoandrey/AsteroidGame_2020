@@ -46,8 +46,8 @@ namespace AsteroidGame_2020
         {
             // Проверяем вывод графики
             Buffer.Graphics.Clear(Color.Black);
-            Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
-            Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
+            //Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
+            //Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
             Buffer.Render();
 
             Buffer.Graphics.Clear(Color.Black);
