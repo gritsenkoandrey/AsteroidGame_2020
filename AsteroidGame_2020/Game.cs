@@ -33,6 +33,8 @@ namespace AsteroidGame_2020
             // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
+            Load();
+
             Timer timer = new Timer { Interval = 100 };
             timer.Start();
             timer.Tick += Timer_tick;
