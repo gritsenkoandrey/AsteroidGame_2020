@@ -45,10 +45,10 @@ namespace AsteroidGame_2020
         public static void Draw()
         {
             // Проверяем вывод графики
-            Buffer.Graphics.Clear(Color.Black);
+            //Buffer.Graphics.Clear(Color.Black);
             //Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
             //Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
-            Buffer.Render();
+            //Buffer.Render();
 
             Buffer.Graphics.Clear(Color.Black);
             foreach(BaseObject obj in _objs)
@@ -59,14 +59,17 @@ namespace AsteroidGame_2020
         }
         public static BaseObject[] _objs;
         public static void Load()
-        {           
+        {
+            Bitmap image = Properties.Resources.Asteroid;
+
             _objs = new BaseObject[60];
+            
             for (int i = 0; i < _objs.Length/3; i++)
-                _objs[i] = new BaseObject(new Point(600, i * 20), new Point(15-i, 20-i), new Size(10, 10));
+                _objs[i] = new BaseObject(new Point(600, i * 20), new Point(15-i, 20-i), new Size(1, 1));
             for (int i = _objs.Length/3; i < _objs.Length-_objs.Length / 3; i++)
                 _objs[i] = new Star(new Point(600, i * 20), new Point(-i, 0), new Size(5, 5));
             for (int i = _objs.Length - _objs.Length / 3; i < _objs.Length; i++)
-                _objs[i] = new Rectangles(new Point(600, i), new Point(20-i, 20-i), new Size(1, 1));
+                _objs[i] = new ImageObject(new Point(600, i), new Point(15-i, 10+i), new Size(50, 50), image);
         }
         public static void Update()
         {

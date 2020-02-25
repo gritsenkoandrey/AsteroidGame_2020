@@ -7,15 +7,18 @@ using System.Drawing;
 
 namespace AsteroidGame_2020
 {
-    class Rectangles : BaseObject
+    class ImageObject : BaseObject
     {
-        public Rectangles(Point pos, Point dir, Size size) : base (pos, dir, size)
+        public ImageObject(Point pos, Point dir, Size size, Image image) : base (pos, dir, size)
         {
-
+            this.image = image;
         }
+
+        Image image = Properties.Resources.Asteroid;
+
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawRectangle(Pens.White, Pos.X, Pos.Y, Size.Width, Size.Height);
+            Game.Buffer.Graphics.DrawImage(image, Pos.X, Pos.Y, Size.Width, Size.Height);
         }
         public override void Update()
         {
