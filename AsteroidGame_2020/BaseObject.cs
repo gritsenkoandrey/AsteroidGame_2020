@@ -18,10 +18,7 @@ namespace AsteroidGame_2020
             Dir = dir;
             Size = size;
         }
-        public abstract void Draw();
-        //{
-        //    Game.Buffer.Graphics.DrawEllipse(Pens.White, Pos.X, Pos.Y, Size.Width, Size.Height);
-        //}
+        public abstract void Draw(); // в абстрактном базовом классе методы должны быть без реализации, вся реализация идет в производных классах
         public virtual void Update()
         {
             Pos.X = Pos.X + Dir.X;
