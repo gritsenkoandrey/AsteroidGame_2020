@@ -7,21 +7,21 @@ using System.Drawing;
 
 namespace AsteroidGame_2020
 {
-    class BaseObject
+    abstract class BaseObject
     {
         protected Point Pos;
         protected Point Dir;
         protected Size Size;
-        public BaseObject(Point pos, Point dir, Size size)
+        protected BaseObject(Point pos, Point dir, Size size)
         {
             Pos = pos;
             Dir = dir;
             Size = size;
         }
-        public virtual void Draw()
-        {
-            Game.Buffer.Graphics.DrawEllipse(Pens.White, Pos.X, Pos.Y, Size.Width, Size.Height);
-        }
+        public abstract void Draw();
+        //{
+        //    Game.Buffer.Graphics.DrawEllipse(Pens.White, Pos.X, Pos.Y, Size.Width, Size.Height);
+        //}
         public virtual void Update()
         {
             Pos.X = Pos.X + Dir.X;
