@@ -45,10 +45,10 @@ namespace AsteroidGame_2020
         public static void Draw()
         {
             // Проверяем вывод графики
-            Buffer.Graphics.Clear(Color.Black);
-            Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
-            Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
-            Buffer.Render();
+            //Buffer.Graphics.Clear(Color.Black);
+            //Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
+            //Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
+            //Buffer.Render();
 
             Buffer.Graphics.Clear(Color.Black);
             foreach(BaseObject obj in _objs)
@@ -58,13 +58,26 @@ namespace AsteroidGame_2020
             Buffer.Render();
         }
         public static BaseObject[] _objs;
+        public static Asteroid[] _asteroids;
+        public static Bullet _bullet;
         public static void Load()
         {           
             _objs = new BaseObject[30];
-            for (int i = 0; i < _objs.Length / 2; i++)
-                _objs[i] = new BaseObject(new Point(600, i * 20), new Point(-i, -i), new Size(10, 10));
-            for (int i = _objs.Length / 2; i < _objs.Length; i++)
-                _objs[i] = new Star(new Point(600, i * 20), new Point(-i, 0), new Size(5, 5));
+            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
+            _asteroids = new Asteroid[5];
+
+            var rnd = new Random();
+
+            for (int i = 0; i < _asteroids.Length; i++)
+            {
+                int r = rnd.Next(5, 50);
+                _asteroids[i] = new Asteroid(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r/5, r), new Size(r, r));
+            }   
+            for (int i = _objs.Length; i < _objs.Length; i++)
+            {
+                int r = rnd.Next(5, 50);
+                _objs[i] = new Star(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r, r), new Size(3, 3));
+            }               
         }
         public static void Update()
         {
