@@ -63,7 +63,7 @@ namespace AsteroidGame_2020
         public static Bullet _bullet;
         public static void Load()
         {           
-            _objs = new BaseObject[100];
+            _objs = new BaseObject[200];
             _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
             _asteroids = new Asteroid[20];
 
@@ -77,7 +77,7 @@ namespace AsteroidGame_2020
             for (int i = 0; i < _objs.Length; i++)
             {
                 int r = rnd.Next(5, 50);
-                _objs[i] = new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(3, 3));
+                _objs[i] = new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(2, 2));
             }               
         }
         public static void Update()
