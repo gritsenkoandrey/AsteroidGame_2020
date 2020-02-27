@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace AsteroidGame_2020
 {
-    abstract class BaseObject
+    abstract class BaseObject : ICollision
     {
         protected Point Pos;
         protected Point Dir;
@@ -18,6 +18,9 @@ namespace AsteroidGame_2020
             Dir = dir;
             Size = size;
         }
+
+        //public Rectangle Rect => throw new NotImplementedException();
+
         public abstract void Draw(); // в абстрактном базовом классе методы должны быть без реализации, вся реализация идет в производных классах
         public virtual void Update()
         {
@@ -28,6 +31,15 @@ namespace AsteroidGame_2020
             if (Pos.Y < 0) Dir.Y = -Dir.Y;
             if (Pos.Y > Game.Height) Dir.Y = -Dir.Y;
         }
+
+        // Так как переданный объект тоже должен будет реализовывать интерфейс ICollision, мы 
+        // можем использовать его свойство Rect и метод IntersectsWith для обнаружения пересечения с
+        // нашим объектом (а можно наоборот)
+        public bool Collision(ICollision o)
+        {
+            return o.Rect.IntersectsWith(this.Rect);
+        }
+        public Rectangle Rect => new Rectangle(Pos, Size);
 
     }
 }
