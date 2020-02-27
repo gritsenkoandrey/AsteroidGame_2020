@@ -25,7 +25,7 @@ namespace AsteroidGame_2020
         }
         public override void Draw()
         {
-            Game.Buffer.Graphics.FillEllipse(Brushes.White, Pos.X, Pos.Y, Size.Width, Size.Height);
+            Game.Buffer.Graphics.DrawImage(Properties.Resources.Asteroid, Pos.X, Pos.Y, Size.Width, Size.Height);
         }
         public override void Update() // также можно воспользоваться реализацией базового класса
         {
