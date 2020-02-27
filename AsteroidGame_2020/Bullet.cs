@@ -18,6 +18,5 @@ namespace AsteroidGame_2020
         {
             Pos.X = Pos.X + 3;
         }
-
     }
 }

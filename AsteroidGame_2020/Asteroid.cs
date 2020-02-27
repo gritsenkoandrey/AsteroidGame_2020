@@ -19,7 +19,6 @@ namespace AsteroidGame_2020
             asteroid.Power = Power;
             return asteroid;
         }
-
         public Asteroid (Point pos, Point dir, Size size) : base (pos, dir, size)
         {
             Power = 1;

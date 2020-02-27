@@ -63,21 +63,21 @@ namespace AsteroidGame_2020
         public static Bullet _bullet;
         public static void Load()
         {           
-            _objs = new BaseObject[30];
+            _objs = new BaseObject[100];
             _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
-            _asteroids = new Asteroid[5];
+            _asteroids = new Asteroid[20];
 
             var rnd = new Random();
 
             for (int i = 0; i < _asteroids.Length; i++)
             {
                 int r = rnd.Next(5, 50);
-                _asteroids[i] = new Asteroid(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r/5, r), new Size(r, r));
+                _asteroids[i] = new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(r, r));
             }   
-            for (int i = _objs.Length; i < _objs.Length; i++)
+            for (int i = 0; i < _objs.Length; i++)
             {
                 int r = rnd.Next(5, 50);
-                _objs[i] = new Star(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r, r), new Size(3, 3));
+                _objs[i] = new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(3, 3));
             }               
         }
         public static void Update()
