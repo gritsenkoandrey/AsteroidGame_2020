@@ -7,9 +7,18 @@ using System.Drawing;
 
 namespace AsteroidGame_2020
 {
-    class Asteroid : BaseObject
+    class Asteroid : BaseObject, ICloneable
     {
         public int Power { get; set; }
+
+        public object Clone() //реализация метода в интерфейсе ICloneable
+        {
+            // Создаем копию нашего робота
+            Asteroid asteroid = new Asteroid(new Point(Pos.X, Pos.Y), new Point(Dir.X, Dir.Y), new Size(Size.Height, Size.Width));
+            // Не забываем скопировать новому астероиду Power нашего астероида
+            asteroid.Power = Power;
+            return asteroid;
+        }
 
         public Asteroid (Point pos, Point dir, Size size) : base (pos, dir, size)
         {
@@ -27,6 +36,6 @@ namespace AsteroidGame_2020
             if (Pos.X > Game.Width) Dir.X = -Dir.X;
             if (Pos.Y < 0) Dir.Y = -Dir.Y;
             if (Pos.Y > Game.Height) Dir.Y = -Dir.Y;
-        }
+        }        
     }
 }
