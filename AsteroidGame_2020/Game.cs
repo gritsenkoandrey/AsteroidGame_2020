@@ -52,9 +52,10 @@ namespace AsteroidGame_2020
 
             Buffer.Graphics.Clear(Color.Black);
             foreach(BaseObject obj in _objs)
-            {
-                obj.Draw();                
-            }
+                obj.Draw();
+            foreach (Asteroid obj in _asteroids)
+                obj.Draw();
+            _bullet.Draw();
             Buffer.Render();
         }
         public static BaseObject[] _objs;
@@ -83,6 +84,15 @@ namespace AsteroidGame_2020
         {
             foreach (BaseObject obj in _objs)
                 obj.Update();
+            foreach(Asteroid a in _asteroids)
+            {
+                a.Update();
+                if(a.Collision(_bullet))
+                {
+                    System.Media.SystemSounds.Hand.Play();
+                }
+            }
+            _bullet.Update();
         }
     }
 }
