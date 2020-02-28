@@ -33,7 +33,7 @@ namespace AsteroidGame_2020
         // можем использовать его свойство Rect и метод IntersectsWith для обнаружения пересечения с
         // нашим объектом (а можно наоборот)
         public bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
-        public Rectangle Rect //public Rectangle Rec => new Rectangle(Pos, Size); можно вот так сокрвтить
+        public Rectangle Rect //public Rectangle Rec => new Rectangle(Pos, Size); можно вот так сократить
         {
             get { return new Rectangle(Pos, Size); }
         }
