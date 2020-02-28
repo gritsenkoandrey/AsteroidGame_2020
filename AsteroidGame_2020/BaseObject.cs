@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Collections;
 
 namespace AsteroidGame_2020
 {
@@ -32,6 +33,9 @@ namespace AsteroidGame_2020
         // можем использовать его свойство Rect и метод IntersectsWith для обнаружения пересечения с
         // нашим объектом (а можно наоборот)
         public bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
-        public Rectangle Rect => new Rectangle(Pos, Size);
+        public Rectangle Rect //public Rectangle Rec => new Rectangle(Pos, Size); можно вот так сокрвтить
+        {
+            get { return new Rectangle(Pos, Size); }
+        }
     }
 }

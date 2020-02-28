@@ -64,8 +64,8 @@ namespace AsteroidGame_2020
         public static void Load()
         {           
             _objs = new BaseObject[200];
-            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
-            _asteroids = new Asteroid[20];
+            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(5, 2));
+            _asteroids = new Asteroid[15];
 
             var rnd = new Random();
 
