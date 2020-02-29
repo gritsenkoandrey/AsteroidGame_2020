@@ -7,27 +7,14 @@ using System.Drawing;
 
 namespace AsteroidGame_2020
 {
-    class Asteroid : BaseObject, ICloneable
+    class Asteroid : BaseObject, ICollision
     {
-        public int Power { get; set; }
-
-        public object Clone() //реализация метода в интерфейсе ICloneable
-        {
-            // Создаем копию нашего робота
-            Asteroid asteroid = new Asteroid(new Point(Pos.X, Pos.Y), new Point(Dir.X, Dir.Y), new Size(Size.Height, Size.Width));
-            // Не забываем скопировать новому астероиду Power нашего астероида
-            asteroid.Power = Power;
-            return asteroid;
-        }
-        public Asteroid (Point pos, Point dir, Size size) : base (pos, dir, size)
-        {
-            Power = 1;
-        }
+        public Asteroid (Point pos, Point dir, Size size) : base (pos, dir, size) { }
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawImage(Properties.Resources.Asteroid, Pos.X, Pos.Y, Size.Width, Size.Height);
+            Game.Buffer.Graphics.DrawImage(Properties.Resources.Asteroid, Rect);
         }
-        public override void Update() // также можно воспользоваться реализацией базового класса
+        public override void Update()
         {
             Pos.X = Pos.X + Dir.X;
             Pos.Y = Pos.Y + Dir.Y;

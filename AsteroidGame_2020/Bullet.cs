@@ -12,9 +12,7 @@ namespace AsteroidGame_2020
         public Bullet(int Pos)
             : base(new Point(0, Pos), Point.Empty, new Size(20, 5))
         {
-
         }
-        //public Bullet (Point pos, Point dir, Size size) : base (pos, dir, size) { }
         public override void Draw()
         {
             Game.Buffer.Graphics.DrawEllipse(Pens.Red, Rect);
@@ -22,8 +20,7 @@ namespace AsteroidGame_2020
         }
         public override void Update()
         {
-            Pos = new Point(Pos.X + 3, Pos.Y);
-            //Pos.X = Pos.X + 3;
+            Pos = new Point(Pos.X + 30, Pos.Y);            
         }
     }
 }
