@@ -8,11 +8,12 @@ using System.Collections;
 
 namespace AsteroidGame_2020
 {
-    abstract class BaseObject : ICollision
+    public abstract class BaseObject : ICollision
     {
         protected Point Pos;
         protected Point Dir;
         protected Size Size;
+        public Point Position => Pos;
         protected BaseObject(Point pos, Point dir, Size size)
         {
             Pos = pos;

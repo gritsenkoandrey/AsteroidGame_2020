@@ -9,14 +9,21 @@ namespace AsteroidGame_2020
 {
     class Bullet : BaseObject
     {
-        public Bullet (Point pos, Point dir, Size size) : base (pos, dir, size) { }
+        public Bullet(int Pos)
+            : base(new Point(0, Pos), Point.Empty, new Size(20, 5))
+        {
+
+        }
+        //public Bullet (Point pos, Point dir, Size size) : base (pos, dir, size) { }
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawRectangle(Pens.OrangeRed, Pos.X, Pos.Y, Size.Width, Size.Height);
+            Game.Buffer.Graphics.DrawEllipse(Pens.Red, Rect);
+            Game.Buffer.Graphics.FillEllipse(Brushes.White, Rect);
         }
         public override void Update()
         {
-            Pos.X = Pos.X + 3;
+            Pos = new Point(Pos.X + 3, Pos.Y);
+            //Pos.X = Pos.X + 3;
         }
     }
 }

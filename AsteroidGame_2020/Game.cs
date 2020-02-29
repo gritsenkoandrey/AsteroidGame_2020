@@ -54,7 +54,7 @@ namespace AsteroidGame_2020
             foreach(BaseObject obj in _objs)
                 obj.Draw();
             foreach (Asteroid obj in _asteroids)
-                obj.Draw();
+                obj?.Draw();
             _bullet.Draw();
             Buffer.Render();
         }
@@ -64,7 +64,7 @@ namespace AsteroidGame_2020
         public static void Load()
         {           
             _objs = new BaseObject[200];
-            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(5, 2));
+            _bullet = new Bullet(200);
             _asteroids = new Asteroid[15];
 
             var rnd = new Random();
@@ -83,16 +83,32 @@ namespace AsteroidGame_2020
         public static void Update()
         {
             foreach (BaseObject obj in _objs)
-                obj.Update();
+                obj?.Update();
             foreach(Asteroid a in _asteroids)
+                a?.Update();
+            _bullet.Update();
+            var rnd = new Random();
+
+            if (_bullet.Position.X > Width)
+                _bullet = new Bullet(new Random().Next(Width));
+
+            for (var i = 0; i < _asteroids.Length; i++)
             {
-                a.Update();
-                if(a.Collision(_bullet))
+                int r = rnd.Next(5, 50);
+                var obj = _asteroids[i];
+                if (obj is ICollision)
                 {
-                    System.Media.SystemSounds.Hand.Play();
+                    var collision_object = (ICollision)obj;
+                    if (_bullet.Collision(collision_object))
+                    {
+                        _bullet = new Bullet(new Random().Next(Width));
+                        _asteroids[i] = null;
+                        _asteroids[i] = new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(r, r));
+                        System.Media.SystemSounds.Hand.Play();
+                    }
                 }
             }
-            _bullet.Update();
+            
         }
     }
 }

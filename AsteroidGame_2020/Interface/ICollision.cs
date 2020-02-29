@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace AsteroidGame_2020
 {
-    interface ICollision
+    public interface ICollision
     {
         bool Collision(ICollision obj);
         Rectangle Rect { get; }
