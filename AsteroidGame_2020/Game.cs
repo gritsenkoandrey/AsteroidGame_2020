@@ -58,7 +58,8 @@ namespace AsteroidGame_2020
             var rnd = new Random();            
 
             const int asteroids_count = 20;
-            const int stars_count = 300;            
+            const int stars_count = 300;
+            const int star_size = 2;
 
             for (int i = 0; i < asteroids_count; i++)
             {
@@ -68,7 +69,9 @@ namespace AsteroidGame_2020
             for (int i = 0; i < stars_count; i++)
             {
                 int r = rnd.Next(5, 50);
-                game_object.Add(new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(2, 2)));
+                game_object.Add(new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(star_size, star_size)));
+                if (star_size > 2)
+                    throw new GameObjectException("Превышен размер звезд");
             }
             _game_object = game_object.ToArray();
             _bullet = new Bullet(200);
