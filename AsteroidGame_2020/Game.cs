@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 
 namespace AsteroidGame_2020
 {
@@ -22,8 +23,13 @@ namespace AsteroidGame_2020
             Graphics g;
             _context = BufferedGraphicsManager.Current;
             g = form.CreateGraphics();
-            Width = form.ClientSize.Width;
-            Height = form.ClientSize.Height;
+            Width = form.Width;
+            Height = form.Height;
+
+            if((form.Width > 1000 || form.Width < 0) || (form.Height > 1000 || form.Height < 0))
+                throw new ArgumentOutOfRangeException("Высота или ширина больше 1000 или принимает отрицательное значение");
+
+
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
                         
             Timer timer = new Timer { Interval = 10 };
@@ -81,7 +87,7 @@ namespace AsteroidGame_2020
                 var obj = _game_object[i];
                 if (obj is ICollision)
                 {
-                    var collision_object = (ICollision)obj;
+                    ICollision collision_object = obj;
                     if (_bullet.Collision(collision_object))
                     {
                         _bullet = new Bullet(new Random().Next(Width));
