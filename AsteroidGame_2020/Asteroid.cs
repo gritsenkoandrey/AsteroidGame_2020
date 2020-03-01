@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace AsteroidGame_2020
 {
-    class Asteroid : BaseObject, ICloneable, IComparable
+    class Asteroid : BaseObject, ICloneable, IComparable<Asteroid>
     {
         public int Power { get; set; } = 3;
 
@@ -39,18 +39,13 @@ namespace AsteroidGame_2020
             if (Pos.Y < 0) Dir.Y = -Dir.Y;
             if (Pos.Y > Game.Height) Dir.Y = -Dir.Y;
         }
-        int IComparable.CompareTo(object obj)
+        int IComparable<Asteroid>.CompareTo(Asteroid obj)
         {
-            if (obj is Asteroid temp)
-            {
-                if (Power > temp.Power)
-                    return 1;
-                if (Power < temp.Power)
-                    return -1;
-                if (Power == temp.Power)
-                    return 0;
-            }
-            throw new ArgumentException("Parameter is not а Asteroid!");
+            if (Power > obj.Power)
+                return 1;
+            if (Power < obj.Power)
+                return -1;
+            return 0;
         }
     }
 }
