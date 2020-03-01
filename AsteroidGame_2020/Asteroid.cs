@@ -7,16 +7,19 @@ using System.Drawing;
 
 namespace AsteroidGame_2020
 {
-    class Asteroid : BaseObject, ICloneable
+    class Asteroid : BaseObject, ICloneable, IComparable
     {
-        public int Power { get; set; }
+        public int Power { get; set; } = 3;
 
         public object Clone() //реализация метода в интерфейсе ICloneable
         {
             // Создаем копию нашего робота
-            Asteroid asteroid = new Asteroid(new Point(Pos.X, Pos.Y), new Point(Dir.X, Dir.Y), new Size(Size.Height, Size.Width));
+            Asteroid asteroid = new Asteroid(new Point(Pos.X, Pos.Y),
+                new Point(Dir.X, Dir.Y),
+                new Size(Size.Height, Size.Width))
+            { Power = Power};
             // Не забываем скопировать новому астероиду Power нашего астероида
-            asteroid.Power = Power;
+            //asteroid.Power = Power;
             return asteroid;
         }
         public Asteroid (Point pos, Point dir, Size size) : base (pos, dir, size)
@@ -35,6 +38,19 @@ namespace AsteroidGame_2020
             if (Pos.X > Game.Width) Dir.X = -Dir.X;
             if (Pos.Y < 0) Dir.Y = -Dir.Y;
             if (Pos.Y > Game.Height) Dir.Y = -Dir.Y;
-        }        
+        }
+        int IComparable.CompareTo(object obj)
+        {
+            if (obj is Asteroid temp)
+            {
+                if (Power > temp.Power)
+                    return 1;
+                if (Power < temp.Power)
+                    return -1;
+                if (Power == temp.Power)
+                    return 0;
+            }
+            throw new ArgumentException("Parameter is not а Asteroid!");
+        }
     }
 }
