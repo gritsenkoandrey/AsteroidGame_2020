@@ -10,6 +10,8 @@ namespace AsteroidGame_2020
 {
     abstract class BaseObject : ICollision
     {
+        public delegate void Message();
+
         protected Point Pos;
         protected Point Dir;
         protected Size Size;

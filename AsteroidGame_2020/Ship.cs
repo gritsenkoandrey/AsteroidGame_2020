@@ -9,6 +9,8 @@ namespace AsteroidGame_2020
 {
     class Ship : BaseObject
     {
+        public static event Message MessageDie;
+
         private int _energy = 100;
         public int Energy => _energy;
         public Ship(Point pos, Point dir, Size size) : base(pos, dir, size)
@@ -32,7 +34,7 @@ namespace AsteroidGame_2020
         }
         public void Die()
         {
-
+            MessageDie?.Invoke();
         }
     }
 }
