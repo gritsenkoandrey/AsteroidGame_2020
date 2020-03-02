@@ -51,6 +51,7 @@
     <Compile Include="Asteroid.cs" />
     <Compile Include="BaseObject.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="Ship.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Interface\ICollision.cs" />
     <Compile Include="Program.cs" />
