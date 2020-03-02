@@ -16,6 +16,10 @@ namespace AsteroidGame_2020
         // Ширина и высота игрового поля
         public static int Width { get; set; }
         public static int Height { get; set; }
+
+        private static Timer _timer = new Timer() { Interval = 10 };
+        public static Random Rnd = new Random();
+
         static Game()
         {
         }
@@ -33,13 +37,20 @@ namespace AsteroidGame_2020
             // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
-            Timer timer = new Timer { Interval = 100 };
-            timer.Start();
-            timer.Tick += Timer_tick;
+            //Timer timer = new Timer { Interval = 100 };
+            _timer.Start();
+            _timer.Tick += Timer_tick;
 
             form.KeyDown += Form_KeyDown;
-        }
 
+            Ship.MessageDie += Finish;
+        }
+        public static void Finish()
+        {
+            _timer.Stop();
+            Buffer.Graphics.DrawString("Конец игры!", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline), Brushes.White, 200, 100);
+            Buffer.Render();
+        }
         private static void Form_KeyDown(object sender, KeyEventArgs e) // управление кораблем
         {
             if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(new Point(_ship.Rect.X + 10, _ship.Rect.Y + 4), new Point(4, 0), new Size(5, 2));
