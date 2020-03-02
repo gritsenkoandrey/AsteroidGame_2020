@@ -36,7 +36,17 @@ namespace AsteroidGame_2020
             Timer timer = new Timer { Interval = 100 };
             timer.Start();
             timer.Tick += Timer_tick;
+
+            form.KeyDown += Form_KeyDown;
         }
+
+        private static void Form_KeyDown(object sender, KeyEventArgs e) // управление кораблем
+        {
+            if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(new Point(_ship.Rect.X + 10, _ship.Rect.Y + 4), new Point(4, 0), new Size(5, 2));
+            if (e.KeyCode == Keys.Up) _ship.Up();
+            if (e.KeyCode == Keys.Down) _ship.Down();
+        }
+
         public static void Timer_tick(object sender, EventArgs e)
         {
             Draw();
@@ -61,11 +71,13 @@ namespace AsteroidGame_2020
         public static BaseObject[] _objs;
         public static Asteroid[] _asteroids;
         public static Bullet _bullet;
+        public static Ship _ship;
         public static void Load()
         {           
             _objs = new BaseObject[200];
             _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(5, 2));
             _asteroids = new Asteroid[15];
+            _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
 
             var rnd = new Random();
 
