@@ -54,18 +54,16 @@ namespace AsteroidGame_2020
         }
         public static void Draw()
         {
-            // Проверяем вывод графики
-            //Buffer.Graphics.Clear(Color.Black);
-            //Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
-            //Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
-            //Buffer.Render();
-
             Buffer.Graphics.Clear(Color.Black);
             foreach(BaseObject obj in _objs)
-                obj.Draw();
+                obj?.Draw();
             foreach (Asteroid obj in _asteroids)
-                obj.Draw();
+                obj?.Draw();
+            _ship.Draw();
             _bullet.Draw();
+            // если корабль живой, то выводим его энергию на экран
+            if (_ship != null)
+                Buffer.Graphics.DrawString("Энергия корабля:" + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 10, 10);
             Buffer.Render();
         }
         public static BaseObject[] _objs;
