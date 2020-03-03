@@ -12,7 +12,8 @@ namespace AsteroidGame_2020
         public Bullet (Point pos, Point dir, Size size) : base (pos, dir, size) { }
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawRectangle(Pens.OrangeRed, Pos.X, Pos.Y, Size.Width, Size.Height);
+            Game.Buffer.Graphics.DrawEllipse(Pens.Red, Rect);
+            Game.Buffer.Graphics.FillEllipse(Brushes.White, Rect);
         }
         public override void Update()
         {
