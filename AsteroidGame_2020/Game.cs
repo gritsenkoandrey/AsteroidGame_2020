@@ -53,7 +53,7 @@ namespace AsteroidGame_2020
         }
         private static void Form_KeyDown(object sender, KeyEventArgs e) // управление кораблем
         {
-            if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(new Point(_ship.Rect.X + 10, _ship.Rect.Y + 4), new Point(4, 0), new Size(5, 2));
+            if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(new Point(_ship.Rect.X + 10, _ship.Rect.Y + 4), new Point(4, 0), new Size(8, 4));
             if (e.KeyCode == Keys.Up) _ship.Up();
             if (e.KeyCode == Keys.Down) _ship.Down();
         }
@@ -84,7 +84,7 @@ namespace AsteroidGame_2020
         public static void Load()
         {
             _objs = new BaseObject[200];
-            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(5, 2));
+            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(8, 4));
             _asteroids = new Asteroid[15];
             _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
 
