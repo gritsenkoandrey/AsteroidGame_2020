@@ -37,7 +37,6 @@ namespace AsteroidGame_2020
             // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
-            //Timer timer = new Timer { Interval = 100 };
             _timer.Start();
             _timer.Tick += Timer_tick;
 
@@ -48,7 +47,9 @@ namespace AsteroidGame_2020
         public static void Finish()
         {
             _timer.Stop();
-            Buffer.Graphics.DrawString("Конец игры!", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline), Brushes.White, 200, 100);
+            Buffer.Graphics.DrawString("!!! Game Over !!!",
+                new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline),
+                Brushes.White, 80, 200);
             Buffer.Render();
         }
         private static void Form_KeyDown(object sender, KeyEventArgs e) // управление кораблем
@@ -66,9 +67,7 @@ namespace AsteroidGame_2020
         public static void Draw()
         {
             Buffer.Graphics.Clear(Color.Black);
-            foreach (BaseObject obj in _objs)
-                obj?.Draw();
-            foreach (Asteroid obj in _asteroids)
+            foreach (BaseObject obj in _game_object)
                 obj?.Draw();
             _ship?.Draw();
             _bullet?.Draw();
@@ -77,47 +76,51 @@ namespace AsteroidGame_2020
                 Buffer.Graphics.DrawString("Энергия корабля:" + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 10, 10);
             Buffer.Render();
         }
-        public static BaseObject[] _objs;
-        public static Asteroid[] _asteroids;
+        public static BaseObject[] _game_object;
         public static Bullet _bullet;
-        public static Ship _ship;
+        public static Ship _ship;        
         public static void Load()
         {
-            _objs = new BaseObject[200];
-            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(8, 4));
-            _asteroids = new Asteroid[15];
-            _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
+            var game_object = new List<BaseObject>();
 
             var rnd = new Random();
 
-            for (int i = 0; i < _asteroids.Length; i++)
+            const int asteroids_count = 20;
+            const int stars_count = 300;
+            const int star_size = 2;
+
+            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(8, 4));
+            _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
+
+            for (int i = 0; i < asteroids_count; i++)
             {
                 int r = rnd.Next(5, 50);
-                _asteroids[i] = new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(r, r));
+                game_object.Add(new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(r, r)));
             }
-            for (int i = 0; i < _objs.Length; i++)
+            for (int i = 0; i < stars_count; i++)
             {
                 int r = rnd.Next(5, 50);
-                _objs[i] = new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(2, 2));
+                game_object.Add(new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(star_size, star_size)));
             }
+            _game_object = game_object.ToArray();
         }
         public static void Update()
         {
-            foreach (BaseObject obj in _objs)
-                obj.Update();
+            foreach (BaseObject obj in _game_object)
+                obj?.Update();
             _bullet?.Update();
-            for (int i = 0; i < _asteroids.Length; i++)
+            for (int i = 0; i < _game_object.Length; i++)
             {
-                if (_asteroids[i] == null) continue;
-                _asteroids[i].Update();                
-                if (_bullet != null && _bullet.Collision(_asteroids[i]))
+                if (_game_object[i] == null) continue;
+                _game_object[i].Update();                
+                if (_bullet != null && _bullet.Collision(_game_object[i]))
                 {
                     System.Media.SystemSounds.Hand.Play();
                     _bullet = null;
-                    _asteroids[i] = null;
+                    _game_object[i] = null;
                     continue;
                 }
-                if (!_ship.Collision(_asteroids[i])) continue;
+                if (!_ship.Collision(_game_object[i])) continue;
                 var rnd = new Random();
                 _ship?.EnergyLow(rnd.Next(1, 10));
                 System.Media.SystemSounds.Asterisk.Play();
