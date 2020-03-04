@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace AsteroidGame_2020
 {
-    class Bullet : BaseObject
+    class Bullet : BaseObject, ICollision
     {
         public Bullet(int Pos)
             : base(new Point(10, Pos), Point.Empty, new Size(20, 5)) { }
@@ -20,5 +20,6 @@ namespace AsteroidGame_2020
         {
             Pos.X = Pos.X + 3;
         }
+        public bool CheckCollision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
     }
 }

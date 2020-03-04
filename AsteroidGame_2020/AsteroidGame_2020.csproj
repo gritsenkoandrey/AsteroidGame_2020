@@ -51,6 +51,7 @@
     <Compile Include="Asteroid.cs" />
     <Compile Include="BaseObject.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="FirstAidKit.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Interface\ICollision.cs" />
@@ -67,10 +68,14 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Ast.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FirstAidKit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

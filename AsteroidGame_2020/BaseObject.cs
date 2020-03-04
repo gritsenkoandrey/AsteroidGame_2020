@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace AsteroidGame_2020
 {
-    abstract class BaseObject : ICollision
+    abstract class BaseObject
     {
         public delegate void Message();
 
@@ -34,7 +34,7 @@ namespace AsteroidGame_2020
         // Так как переданный объект тоже должен будет реализовывать интерфейс ICollision, мы 
         // можем использовать его свойство Rect и метод IntersectsWith для обнаружения пересечения с
         // нашим объектом (а можно наоборот)
-        public bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
+        //public bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
         public Rectangle Rect //public Rectangle Rec => new Rectangle(Pos, Size); можно вот так сокрвтить
         {
             get { return new Rectangle(Pos, Size); }

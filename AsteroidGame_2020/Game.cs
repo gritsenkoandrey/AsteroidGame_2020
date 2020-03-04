@@ -81,12 +81,11 @@ namespace AsteroidGame_2020
         public static void Load()
         {
             var game_object = new List<BaseObject>();
-
             var rnd = new Random();
-
             const int asteroids_count = 20;
             const int stars_count = 300;
             const int star_size = 2;
+            const int firs_aid_kit_count = 5;
             
             _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
             //_bullet = new Bullet(200); // изначально будем без пули
@@ -101,6 +100,11 @@ namespace AsteroidGame_2020
                 int r = rnd.Next(5, 50);
                 game_object.Add(new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, 0), new Size(star_size, star_size)));
             }
+            for (int i = 0; i < firs_aid_kit_count; i++)
+            {
+                int r = rnd.Next(5, 50);
+                game_object.Add(new FirstAidKit(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, 0), new Size(15, 15)));
+            }
             _game_object = game_object.ToArray();
         }
         public static void Update()
@@ -108,22 +112,28 @@ namespace AsteroidGame_2020
             foreach (BaseObject obj in _game_object)
                 obj?.Update();
             _bullet?.Update();
+
             for (int i = 0; i < _game_object.Length; i++)
             {
-                if (_game_object[i] == null) continue;
-                _game_object[i].Update();                
-                if (_bullet != null && _bullet.Collision(_game_object[i]))
+                var obj = _game_object[i];
+                if (obj is ICollision)
                 {
-                    System.Media.SystemSounds.Hand.Play();
-                    _bullet = null;
-                    _game_object[i] = null;
-                    continue;
+                    ICollision collision_obj = (ICollision)obj;
+                    _ship.CheckCollision(collision_obj);
+                    if (_bullet != null && _bullet.CheckCollision(collision_obj))
+                    {
+                        if (collision_obj is Asteroid)
+                        {
+                            _bullet = null;
+                            _game_object[i] = null;
+                        }
+                    }
+                    if (_ship != null && _ship.CheckCollision(collision_obj))
+                    {
+                        if (collision_obj is FirstAidKit)
+                            _game_object[i] = null;
+                    }
                 }
-                if (!_ship.Collision(_game_object[i])) continue;
-                var rnd = new Random();
-                _ship?.EnergyLow(rnd.Next(1, 10));
-                System.Media.SystemSounds.Asterisk.Play();
-                if (_ship.Energy <= 0) _ship.Die();
             }            
         }
     }

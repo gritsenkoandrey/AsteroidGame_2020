@@ -10,7 +10,7 @@ namespace AsteroidGame_2020
 {
     interface ICollision
     {
-        bool Collision(ICollision obj);
+        bool CheckCollision(ICollision obj);
         Rectangle Rect { get; }
     }
 }

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace AsteroidGame_2020
 {
-    class Ship : BaseObject
+    class Ship : BaseObject, ICollision
     {
         public static event Message MessageDie;
 
@@ -38,9 +38,22 @@ namespace AsteroidGame_2020
         {
             MessageDie?.Invoke();
         }
-        public void EnergyLow(int delta) // понижение энергии корабля
+        public void ChangeEnergy(int delta)
         {
-            _energy -= delta;
+            _energy += delta;
+        }
+        public bool CheckCollision(ICollision obj)
+        {
+            var is_collision = Rect.IntersectsWith(obj.Rect);
+            if (is_collision && obj is Asteroid asteroid)
+            {
+                ChangeEnergy(- asteroid.Power);
+            }
+            if (is_collision && obj is FirstAidKit firstAidKit)
+            {
+                ChangeEnergy(+firstAidKit.Power);
+            }
+            return is_collision;
         }
     }
 }

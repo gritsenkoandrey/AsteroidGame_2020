@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace AsteroidGame_2020
 {
-    class Asteroid : BaseObject, ICloneable, IComparable<Asteroid>
+    class Asteroid : BaseObject, ICloneable, IComparable<Asteroid>, ICollision
     {
         public int Power { get; set; } = 3;
 
@@ -24,7 +24,6 @@ namespace AsteroidGame_2020
         }
         public Asteroid (Point pos, Point dir, Size size) : base (pos, dir, size)
         {
-            Power = 1;
         }
         public override void Draw()
         {
@@ -47,5 +46,6 @@ namespace AsteroidGame_2020
                 return -1;
             return 0;
         }
+        public bool CheckCollision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
     }
 }
