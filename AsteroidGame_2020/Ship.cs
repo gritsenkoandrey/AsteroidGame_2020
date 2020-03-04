@@ -36,5 +36,9 @@ namespace AsteroidGame_2020
         {
             MessageDie?.Invoke();
         }
+        public void EnergyLow(int delta) // понижение энергии корабля
+        {
+            _energy -= delta;
+        }
     }
 }
