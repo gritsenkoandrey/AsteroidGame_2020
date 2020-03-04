@@ -47,18 +47,17 @@ namespace AsteroidGame_2020
         public static void Finish()
         {
             _timer.Stop();
-            Buffer.Graphics.DrawString("!!! Game Over !!!",
-                new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline),
-                Brushes.White, 80, 200);
+            Buffer.Graphics.DrawString("!!! Игра окончена !!!",
+                new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold),
+                Brushes.Red, 5, 200);
             Buffer.Render();
         }
         private static void Form_KeyDown(object sender, KeyEventArgs e) // управление кораблем
         {
-            if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(new Point(_ship.Rect.X + 10, _ship.Rect.Y + 4), new Point(4, 0), new Size(8, 4));
+            if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(_ship.Rect.Y+2);
             if (e.KeyCode == Keys.Up) _ship.Up();
             if (e.KeyCode == Keys.Down) _ship.Down();
         }
-
         public static void Timer_tick(object sender, EventArgs e)
         {
             Draw();
@@ -71,7 +70,7 @@ namespace AsteroidGame_2020
                 obj?.Draw();
             _ship?.Draw();
             _bullet?.Draw();
-            // если корабль живой, то выводим его энергию на экран
+            // вывод энергии корабля
             if (_ship != null)
                 Buffer.Graphics.DrawString("Энергия корабля:" + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 10, 10);
             Buffer.Render();
@@ -88,19 +87,19 @@ namespace AsteroidGame_2020
             const int asteroids_count = 20;
             const int stars_count = 300;
             const int star_size = 2;
-
-            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(8, 4));
+            
             _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
+            //_bullet = new Bullet(200); // изначально будем без пули
 
             for (int i = 0; i < asteroids_count; i++)
             {
                 int r = rnd.Next(5, 50);
-                game_object.Add(new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(r, r)));
+                game_object.Add(new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, 0), new Size(r, r)));
             }
             for (int i = 0; i < stars_count; i++)
             {
                 int r = rnd.Next(5, 50);
-                game_object.Add(new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, r), new Size(star_size, star_size)));
+                game_object.Add(new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, 0), new Size(star_size, star_size)));
             }
             _game_object = game_object.ToArray();
         }
