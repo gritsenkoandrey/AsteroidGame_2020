@@ -9,7 +9,8 @@ namespace AsteroidGame_2020
 {
     class Bullet : BaseObject
     {
-        public Bullet (Point pos, Point dir, Size size) : base (pos, dir, size) { }
+        public Bullet(int Pos)
+            : base(new Point(10, Pos), Point.Empty, new Size(20, 5)) { }
         public override void Draw()
         {
             Game.Buffer.Graphics.DrawEllipse(Pens.Red, Rect);
