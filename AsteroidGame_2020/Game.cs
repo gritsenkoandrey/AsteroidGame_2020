@@ -119,8 +119,8 @@ namespace AsteroidGame_2020
                 }
                 if (!_ship.Collision(_asteroids[i])) continue;
                 var rnd = new Random();
-                //_ship?.EnergyLow(rnd.Next(1, 10));
-                //System.Media.SystemSounds.Asterisk.Play();
+                _ship?.EnergyLow(rnd.Next(1, 10));
+                System.Media.SystemSounds.Asterisk.Play();
                 if (_ship.Energy <= 0) _ship.Die();
             }            
         }
