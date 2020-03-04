@@ -9,7 +9,7 @@ namespace AsteroidGame_2020
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Form form = new Form
             {

@@ -11,21 +11,15 @@ namespace AsteroidGame_2020
     {
         public static event Message MessageDie;
 
-        private int _energy = 10;
+        private int _energy = 100;
         public int Energy => _energy;
-        public Ship(Point pos, Point dir, Size size) : base(pos, dir, size)
-        {
-
-        }
+        public Ship(Point pos, Point dir, Size size) : base(pos, dir, size) { }
         public override void Draw()
         {
             Game.Buffer.Graphics.FillEllipse(Brushes.Wheat, Rect);
             Game.Buffer.Graphics.DrawEllipse(Pens.Red, Rect);
         }
-        public override void Update()
-        {
-
-        }
+        public override void Update() { }
         public void Up()
         {
             if (Pos.Y > 0) Pos.Y = Pos.Y - Dir.Y;
@@ -34,15 +28,9 @@ namespace AsteroidGame_2020
         {
             if (Pos.Y < Game.Height) Pos.Y = Pos.Y + Dir.Y;
         }
-        public void Die()
-        {
-            MessageDie?.Invoke();
-        }
         public void ChangeEnergy(int delta)
         {
             _energy += delta;
-            if(_energy <= 0)
-                Die();
         }
         public bool CheckCollision(ICollision obj)
         {

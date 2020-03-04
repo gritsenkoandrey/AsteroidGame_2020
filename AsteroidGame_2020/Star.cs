@@ -9,10 +9,7 @@ namespace AsteroidGame_2020
 {
     class Star : BaseObject
     {
-        public Star(Point pos, Point dir, Size size) : base (pos, dir, size)
-        {
-            
-        }
+        public Star(Point pos, Point dir, Size size) : base (pos, dir, size) { }
         public override void Draw()
         {
             Game.Buffer.Graphics.DrawLine(Pens.Gray, Pos.X, Pos.Y, Pos.X + Size.Width, Pos.Y + Size.Height);

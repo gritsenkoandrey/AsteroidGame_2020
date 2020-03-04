@@ -9,7 +9,7 @@ namespace AsteroidGame_2020
 {
     class FirstAidKit : BaseObject, ICollision
     {
-        public int Power { get; set; } = 1;
+        public int Power { get; set; }
         public FirstAidKit(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
             Power = 10;

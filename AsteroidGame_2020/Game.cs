@@ -12,8 +12,6 @@ namespace AsteroidGame_2020
     {
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
-        // Свойства
-        // Ширина и высота игрового поля
         public static int Width { get; set; }
         public static int Height { get; set; }
 
@@ -43,7 +41,7 @@ namespace AsteroidGame_2020
             form.KeyDown += Form_KeyDown;
 
             Ship.MessageDie += Finish;
-        }
+        } 
         public static void Finish()
         {
             _timer.Stop();
@@ -93,17 +91,20 @@ namespace AsteroidGame_2020
             for (int i = 0; i < asteroids_count; i++)
             {
                 int r = rnd.Next(5, 50);
-                game_object.Add(new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, 0), new Size(r, r)));
+                game_object.Add(new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), 
+                    new Point(-r, 0), new Size(r, r)));
             }
             for (int i = 0; i < stars_count; i++)
             {
                 int r = rnd.Next(5, 50);
-                game_object.Add(new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, 0), new Size(star_size, star_size)));
+                game_object.Add(new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
+                    new Point(-r, 0), new Size(star_size, star_size)));
             }
             for (int i = 0; i < firs_aid_kit_count; i++)
             {
                 int r = rnd.Next(5, 50);
-                game_object.Add(new FirstAidKit(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), new Point(-r, 0), new Size(15, 15)));
+                game_object.Add(new FirstAidKit(new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
+                    new Point(-r, 0), new Size(15, 15)));
             }
             _game_object = game_object.ToArray();
         }
@@ -119,7 +120,6 @@ namespace AsteroidGame_2020
                 if (obj is ICollision)
                 {
                     ICollision collision_obj = (ICollision)obj;
-                    //_ship.CheckCollision(collision_obj);
                     if (_bullet != null && _bullet.CheckCollision(collision_obj))
                     {
                         if (collision_obj is Asteroid)
@@ -132,11 +132,11 @@ namespace AsteroidGame_2020
                     {
                         if (collision_obj is FirstAidKit)
                             _game_object[i] = null;
-                        if (_ship.Energy <= 0)
-                            Finish();
                     }
                 }
-            }            
+                if (_ship?.Energy <= 0)
+                    Finish();
+            }
         }
     }
 }
