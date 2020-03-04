@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.IO;
 
 namespace AsteroidGame_2020
 {
@@ -11,6 +13,8 @@ namespace AsteroidGame_2020
     {
         static void Main()
         {
+            Game.Log += log_str => Debug.WriteLine($">>>{log_str}");
+
             Form form = new Form
             {
                 Width = 800,

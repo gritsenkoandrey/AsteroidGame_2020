@@ -9,6 +9,7 @@ namespace AsteroidGame_2020
 {
     class Bullet : BaseObject, ICollision
     {
+        //public int CountPoint { get; set; } = 0;
         public Bullet(int Pos)
             : base(new Point(10, Pos), Point.Empty, new Size(20, 5)) { }
         public override void Draw()

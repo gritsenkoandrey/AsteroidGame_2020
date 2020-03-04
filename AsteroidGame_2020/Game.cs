@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 
 namespace AsteroidGame_2020
 {
@@ -18,9 +19,18 @@ namespace AsteroidGame_2020
         private static Timer _timer = new Timer() { Interval = 10 };
         public static Random Rnd = new Random();
 
+        public static event Action<string> Log; //создаем событие
+
         static Game()
         {
         }
+        //public static void SaveToFile(string FileName)
+        //{
+        //    using (var file_stream = new FileStream(FileName, FileMode.Create, FileAccess.Write, FileShare.None))
+        //    {
+        //        
+        //    }
+        //}
         public static void Init(Form form)
         {
             // Графическое устройство для вывода графики            
@@ -41,6 +51,8 @@ namespace AsteroidGame_2020
             form.KeyDown += Form_KeyDown;
 
             Ship.MessageDie += Finish;
+
+            Log?.Invoke("Инициализация...");
         } 
         public static void Finish()
         {
@@ -56,6 +68,8 @@ namespace AsteroidGame_2020
             if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(_ship.Rect.Y+2);
             if (e.KeyCode == Keys.Up) _ship.Up();
             if (e.KeyCode == Keys.Down) _ship.Down();
+
+            Log?.Invoke("Кнопка нажата: ");
         }
         public static void Timer_tick(object sender, EventArgs e)
         {
@@ -76,9 +90,12 @@ namespace AsteroidGame_2020
         }
         public static BaseObject[] _game_object;
         public static Bullet _bullet;
-        public static Ship _ship;        
+        public static Ship _ship;
+        //public static Bullet _count_point;
         public static void Load()
         {
+            Log?.Invoke("Загрузка данных сцены...");
+
             var game_object = new List<BaseObject>();
             var rnd = new Random();
             const int asteroids_count = 20;
@@ -95,19 +112,25 @@ namespace AsteroidGame_2020
                 game_object.Add(new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), 
                     new Point(-r, 0), new Size(r, r)));
             }
+            Log?.Invoke($"Астеройдов создано {asteroids_count}");
             for (int i = 0; i < stars_count; i++)
             {
                 int r = rnd.Next(5, 50);
                 game_object.Add(new Star(new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
                     new Point(-r, 0), new Size(star_size, star_size)));
             }
+            Log?.Invoke($"Звезд создано {stars_count}");
             for (int i = 0; i < firs_aid_kit_count; i++)
             {
                 int r = rnd.Next(5, 50);
                 game_object.Add(new FirstAidKit(new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
                     new Point(-r, 0), new Size(15, 15)));
             }
+            Log?.Invoke($"Аптечек создано {firs_aid_kit_count}");
+
             _game_object = game_object.ToArray();
+
+            Log?.Invoke($"Сцена удачно загружена");
         }
         public static void Update()
         {
@@ -125,6 +148,7 @@ namespace AsteroidGame_2020
                     {
                         if (collision_obj is Asteroid)
                         {
+                            //_count_point.CountPoint++;
                             _bullet = null;
                             _game_object[i] = null;
                         }
@@ -136,7 +160,9 @@ namespace AsteroidGame_2020
                     }
                 }
                 if (_ship?.Energy <= 0)
+                {
                     Finish();
+                }
             }
         }
     }
