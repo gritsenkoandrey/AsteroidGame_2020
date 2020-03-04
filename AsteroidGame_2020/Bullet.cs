@@ -18,7 +18,7 @@ namespace AsteroidGame_2020
         }
         public override void Update()
         {
-            Pos.X = Pos.X + 3;
+            Pos = new Point(Pos.X + 20, Pos.Y);
         }
         public bool CheckCollision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
     }

@@ -45,9 +45,10 @@ namespace AsteroidGame_2020
         public static void Finish()
         {
             _timer.Stop();
+            Buffer.Graphics.Clear(color:Color.Black);
             Buffer.Graphics.DrawString("!!! Игра окончена !!!",
                 new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold),
-                Brushes.Red, 5, 200);
+                Brushes.PapayaWhip, 5, 200);
             Buffer.Render();
         }
         private static void Form_KeyDown(object sender, KeyEventArgs e) // управление кораблем
