@@ -11,7 +11,7 @@ namespace AsteroidGame_2020
     {
         public static event Message MessageDie;
 
-        private int _energy = 100;
+        private int _energy = 10;
         public int Energy => _energy;
         public Ship(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
@@ -41,13 +41,15 @@ namespace AsteroidGame_2020
         public void ChangeEnergy(int delta)
         {
             _energy += delta;
+            if(_energy <= 0)
+                Die();
         }
         public bool CheckCollision(ICollision obj)
         {
             var is_collision = Rect.IntersectsWith(obj.Rect);
             if (is_collision && obj is Asteroid asteroid)
             {
-                ChangeEnergy(- asteroid.Power);
+                ChangeEnergy(-asteroid.Power);
             }
             if (is_collision && obj is FirstAidKit firstAidKit)
             {

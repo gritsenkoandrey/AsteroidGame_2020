@@ -119,7 +119,7 @@ namespace AsteroidGame_2020
                 if (obj is ICollision)
                 {
                     ICollision collision_obj = (ICollision)obj;
-                    _ship.CheckCollision(collision_obj);
+                    //_ship.CheckCollision(collision_obj);
                     if (_bullet != null && _bullet.CheckCollision(collision_obj))
                     {
                         if (collision_obj is Asteroid)
@@ -132,6 +132,8 @@ namespace AsteroidGame_2020
                     {
                         if (collision_obj is FirstAidKit)
                             _game_object[i] = null;
+                        if (_ship.Energy <= 0)
+                            Finish();
                     }
                 }
             }            
