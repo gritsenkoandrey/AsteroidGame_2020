@@ -24,13 +24,6 @@ namespace AsteroidGame_2020
         static Game()
         {
         }
-        //public static void SaveToFile(string FileName)
-        //{
-        //    using (var file_stream = new FileStream(FileName, FileMode.Create, FileAccess.Write, FileShare.None))
-        //    {
-        //        
-        //    }
-        //}
         public static void Init(Form form)
         {
             // Графическое устройство для вывода графики            
@@ -85,13 +78,14 @@ namespace AsteroidGame_2020
             _bullet?.Draw();
             // вывод энергии корабля
             if (_ship != null)
-                Buffer.Graphics.DrawString("Энергия корабля:" + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 10, 10);
+                Buffer.Graphics.DrawString("Энергия корабля: " + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 10, 10);
+            Buffer.Graphics.DrawString("Очки: " + _points, SystemFonts.DefaultFont, Brushes.White, 10, 30);
             Buffer.Render();
         }
         public static BaseObject[] _game_object;
         public static Bullet _bullet;
         public static Ship _ship;
-        //public static Bullet _count_point;
+        public static int _points = 0;
         public static void Load()
         {
             Log?.Invoke("Загрузка данных сцены...");
@@ -148,7 +142,7 @@ namespace AsteroidGame_2020
                     {
                         if (collision_obj is Asteroid)
                         {
-                            //_count_point.CountPoint++;
+                            _points += 10; // за каждый сбитый астеройд дают 10 очков
                             _bullet = null;
                             _game_object[i] = null;
                         }
