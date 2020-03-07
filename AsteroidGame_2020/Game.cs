@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace AsteroidGame_2020
 {
@@ -56,7 +58,10 @@ namespace AsteroidGame_2020
         }
         private static void Form_KeyDown(object sender, KeyEventArgs e) // управление кораблем
         {
-            if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(_ship.Rect.Y+2);
+            //if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(_ship.Rect.Y+2);
+
+            if (e.KeyCode == Keys.ControlKey)
+                _bullet.Add(new Bullet(_ship.Rect.Y + 2));
             if (e.KeyCode == Keys.Up) _ship.Up();
             if (e.KeyCode == Keys.Down) _ship.Down();
 
@@ -70,10 +75,13 @@ namespace AsteroidGame_2020
         public static void Draw()
         {
             Buffer.Graphics.Clear(Color.Black);
-            foreach (BaseObject obj in _game_object)
-                obj?.Draw();
-            _ship?.Draw();
-            _bullet?.Draw();
+
+            foreach (BaseObject obj in _game_object) obj?.Draw();
+            
+            _ship.Draw();
+
+            foreach (var bullet in _bullet) bullet.Draw();
+
             // вывод энергии корабля
             if (_ship != null)
                 Buffer.Graphics.DrawString("Энергия корабля: " + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 10, 10);
@@ -81,7 +89,8 @@ namespace AsteroidGame_2020
             Buffer.Render();
         }
         public static BaseObject[] _game_object;
-        public static Bullet _bullet;
+
+        public static List<Bullet> _bullet = new List<Bullet>();
         public static Ship _ship;
         public static int _points = 0;
         public static void Load()
@@ -89,6 +98,7 @@ namespace AsteroidGame_2020
             Log?.Invoke("Загрузка сцены >>>");
 
             var game_object = new List<BaseObject>();
+
             var rnd = new Random();
             const int asteroids_count = 20;
             const int stars_count = 300;
@@ -128,24 +138,66 @@ namespace AsteroidGame_2020
         {
             foreach (BaseObject obj in _game_object)
                 obj?.Update();
-            _bullet?.Update();
 
+            var remove_bullet = new List<Bullet>();
+
+            foreach (Bullet bullet in _bullet)
+            {
+                if (bullet.Rect.X > Width)
+                    remove_bullet.Add(bullet);
+                bullet.Update();
+            }
             for (int i = 0; i < _game_object.Length; i++)
             {
                 var obj = _game_object[i];
                 if (obj is ICollision)
                 {
                     ICollision collision_obj = (ICollision)obj;
-                    if (_bullet != null && _bullet.CheckCollision(collision_obj))
+                    _ship?.CheckCollision(collision_obj);
+                    foreach (var bullet in _bullet.ToArray())
                     {
+                        bullet.CheckCollision(collision_obj);
                         if (collision_obj is Asteroid)
                         {
                             _points += 10; // за каждый сбитый астеройд дают 10 очков
                             Log?.Invoke($"Астеройд сбит");
-                            _bullet = null;
+                            remove_bullet.Add(bullet);
                             _game_object[i] = null;
                         }
                     }
+                        
+                    if (collision_obj is Asteroid)
+                    {
+                        _points += 10; // за каждый сбитый астеройд дают 10 очков
+                        Log?.Invoke($"Астеройд сбит");
+                        _bullet = null;
+                        _game_object[i] = null;
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    //for (int j = 0; j < _bullet.Count; j++)
+                    //{
+                    //    var bullet = _bullet[j];
+
+                    //    if (collision_obj is Asteroid)
+                    //    {
+                    //        _points += 10; // за каждый сбитый астеройд дают 10 очков
+                    //        Log?.Invoke($"Астеройд сбит");
+                    //        _bullet.RemoveAt(j);
+                    //        _game_object[i] = null;
+                    //    }
+                    //}
                     if (_ship != null && _ship.CheckCollision(collision_obj))
                     {
                         if (collision_obj is FirstAidKit)
@@ -158,6 +210,8 @@ namespace AsteroidGame_2020
                     Finish();
                 }
             }
+            foreach (var bullet in remove_bullet)
+                _bullet.Remove(bullet);
         }
     }
 }
