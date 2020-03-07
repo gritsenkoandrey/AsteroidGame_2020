@@ -139,70 +139,40 @@ namespace AsteroidGame_2020
             foreach (BaseObject obj in _game_object)
                 obj?.Update();
 
-            var remove_bullet = new List<Bullet>();
+            List<Bullet> remove_bullet = new List<Bullet>();
 
             foreach (Bullet bullet in _bullet)
             {
-                if (bullet.Rect.X > Width)
-                    remove_bullet.Add(bullet);
                 bullet.Update();
+                if (bullet.Rect.X > Width)
+                    remove_bullet?.Add(bullet);
             }
             for (int i = 0; i < _game_object.Length; i++)
             {
                 var obj = _game_object[i];
                 if (obj is ICollision)
                 {
-                    ICollision collision_obj = (ICollision)obj;
-                    _ship?.CheckCollision(collision_obj);
-                    foreach (var bullet in _bullet.ToArray())
-                    {
-                        bullet.CheckCollision(collision_obj);
-                        if (collision_obj is Asteroid)
-                        {
-                            _points += 10; // за каждый сбитый астеройд дают 10 очков
-                            Log?.Invoke($"Астеройд сбит");
-                            remove_bullet.Add(bullet);
-                            _game_object[i] = null;
-                        }
-                    }
-                        
-                    if (collision_obj is Asteroid)
-                    {
-                        _points += 10; // за каждый сбитый астеройд дают 10 очков
-                        Log?.Invoke($"Астеройд сбит");
-                        _bullet = null;
-                        _game_object[i] = null;
-                    }
+                    var collision_obj = (ICollision)obj;
 
-
-
-
-
-
-
-
-
-
-
-
-
-                    //for (int j = 0; j < _bullet.Count; j++)
-                    //{
-                    //    var bullet = _bullet[j];
-
-                    //    if (collision_obj is Asteroid)
-                    //    {
-                    //        _points += 10; // за каждый сбитый астеройд дают 10 очков
-                    //        Log?.Invoke($"Астеройд сбит");
-                    //        _bullet.RemoveAt(j);
-                    //        _game_object[i] = null;
-                    //    }
-                    //}
-                    if (_ship != null && _ship.CheckCollision(collision_obj))
+                    if (_ship.CheckCollision(collision_obj))
                     {
                         if (collision_obj is FirstAidKit)
                             _game_object[i] = null;
                         Log?.Invoke($"Аптечка подобрана");
+                    }
+                    foreach (Bullet bullet in _bullet.ToArray())
+                    {
+                        if (bullet.CheckCollision(collision_obj))
+                        {
+                            if (collision_obj is Asteroid)
+                            {
+                                _points += 10; // за каждый сбитый астеройд дают 10 очков
+                                Log?.Invoke($"Астеройд сбит");
+                                remove_bullet.Add(bullet);
+                                _game_object[i] = null;
+                                continue;
+                            }
+                        }
                     }
                 }
                 if (_ship?.Energy <= 0)
