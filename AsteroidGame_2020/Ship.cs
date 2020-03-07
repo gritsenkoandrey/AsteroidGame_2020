@@ -11,7 +11,7 @@ namespace AsteroidGame_2020
     {
         public static event Message MessageDie;
 
-        private int _energy = 100;
+        private int _energy = 20;
         public int Energy => _energy;
         public Ship(Point pos, Point dir, Size size) : base(pos, dir, size) { }
         public override void Draw()

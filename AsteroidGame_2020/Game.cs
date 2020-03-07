@@ -22,7 +22,6 @@ namespace AsteroidGame_2020
         public static Random Rnd = new Random();
 
         public static event Action<string> Log; //создаем событие
-
         static Game()
         {
         }
@@ -35,8 +34,8 @@ namespace AsteroidGame_2020
             g = form.CreateGraphics();
             // Создаем объект (поверхность рисования) и связываем его с формой
             // Запоминаем размеры формы
-            Width = form.ClientSize.Width;
-            Height = form.ClientSize.Height;
+            Width = form.Width;
+            Height = form.Height;
             // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
@@ -48,18 +47,16 @@ namespace AsteroidGame_2020
             Ship.MessageDie += Finish;
 
             Log?.Invoke("Инициализация...");
-        } 
+        }
         public static void Finish()
         {
             _timer.Stop();
-            Buffer.Graphics.Clear(color:Color.Black);
+            Buffer.Graphics.Clear(color: Color.Black);
             Buffer.Graphics.DrawString("ИГРА ОКОНЧЕНА", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold), Brushes.DarkOrange, 20, 200);
             Buffer.Render();
         }
         private static void Form_KeyDown(object sender, KeyEventArgs e) // управление кораблем
         {
-            //if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(_ship.Rect.Y+2);
-
             if (e.KeyCode == Keys.ControlKey)
                 _bullet.Add(new Bullet(_ship.Rect.Y + 2));
             if (e.KeyCode == Keys.Up) _ship.Up();
@@ -77,7 +74,7 @@ namespace AsteroidGame_2020
             Buffer.Graphics.Clear(Color.Black);
 
             foreach (BaseObject obj in _game_object) obj?.Draw();
-            
+
             _ship.Draw();
 
             foreach (var bullet in _bullet) bullet.Draw();
@@ -86,10 +83,10 @@ namespace AsteroidGame_2020
             if (_ship != null)
                 Buffer.Graphics.DrawString("Энергия корабля: " + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 10, 10);
             Buffer.Graphics.DrawString("Очки: " + _points, SystemFonts.DefaultFont, Brushes.White, 10, 30);
+
             Buffer.Render();
         }
         public static BaseObject[] _game_object;
-
         public static List<Bullet> _bullet = new List<Bullet>();
         public static Ship _ship;
         public static int _points = 0;
@@ -100,18 +97,17 @@ namespace AsteroidGame_2020
             var game_object = new List<BaseObject>();
 
             var rnd = new Random();
-            const int asteroids_count = 20;
+            const int asteroids_count = 15;
             const int stars_count = 300;
             const int star_size = 2;
             const int firs_aid_kit_count = 5;
-            
+
             _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
-            //_bullet = new Bullet(200); // изначально будем без пули
 
             for (int i = 0; i < asteroids_count; i++)
             {
                 int r = rnd.Next(5, 50);
-                game_object.Add(new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)), 
+                game_object.Add(new Asteroid(new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
                     new Point(-r, 0), new Size(r, r)));
             }
             Log?.Invoke($"Астеройдов создано: {asteroids_count}");
@@ -126,7 +122,7 @@ namespace AsteroidGame_2020
             {
                 int r = rnd.Next(5, 50);
                 game_object.Add(new FirstAidKit(new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
-                    new Point(-r, 0), new Size(15, 15)));
+                    new Point(15, 0), new Size(15, 15)));
             }
             Log?.Invoke($"Аптечек создано: {firs_aid_kit_count}");
 
@@ -145,7 +141,7 @@ namespace AsteroidGame_2020
             {
                 bullet.Update();
                 if (bullet.Rect.X > Width)
-                    remove_bullet?.Add(bullet);
+                    remove_bullet.Add(bullet);
             }
             for (int i = 0; i < _game_object.Length; i++)
             {
@@ -154,30 +150,27 @@ namespace AsteroidGame_2020
                 {
                     var collision_obj = (ICollision)obj;
 
-                    if (_ship.CheckCollision(collision_obj))
+                    if (_ship.CheckCollision(collision_obj) && (collision_obj is FirstAidKit))
                     {
-                        if (collision_obj is FirstAidKit)
-                            _game_object[i] = null;
+                        _game_object[i] = null;
                         Log?.Invoke($"Аптечка подобрана");
                     }
                     foreach (Bullet bullet in _bullet.ToArray())
                     {
-                        if (bullet.CheckCollision(collision_obj))
+                        if (bullet.CheckCollision(collision_obj) && (collision_obj is Asteroid))
                         {
-                            if (collision_obj is Asteroid)
-                            {
-                                _points += 10; // за каждый сбитый астеройд дают 10 очков
-                                Log?.Invoke($"Астеройд сбит");
-                                remove_bullet.Add(bullet);
-                                _game_object[i] = null;
-                                continue;
-                            }
+                            remove_bullet.Add(bullet);
+                            _game_object[i] = null;
+                            _points += 10; // за каждый сбитый астеройд дают 10 очков
+                            Log?.Invoke($"Астеройд сбит");
                         }
                     }
                 }
                 if (_ship?.Energy <= 0)
                 {
                     Finish();
+                    Log?.Invoke($"Корабль уничтожен");
+                    break;
                 }
             }
             foreach (var bullet in remove_bullet)
