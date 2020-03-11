@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Lesson_5_HomeWork.Work
 {
-    class WorkClass
+    class WorkClass : INotifyPropertyChanged
     {
         private string _employee;
         private string _department;
@@ -26,5 +28,6 @@ namespace Lesson_5_HomeWork.Work
                 _department = value;
             }
         }
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

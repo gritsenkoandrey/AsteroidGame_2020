@@ -31,18 +31,24 @@ namespace Lesson_5_HomeWork
         {
             _workClasses = new BindingList<WorkClass>()
             {
-                new WorkClass(){ Employee = "Andrey Gritsenko", Department = "geekbrains"},
-                new WorkClass(){ Employee = "Dmitriy Kiselev", Department = "geekbrains"},
-                new WorkClass(){ Employee = "Irina Gritsenko", Department = "geekbrains"}
+                new WorkClass(){ Employee = "Andrey Gritsenko", Department = "GeekBrains"},
+                new WorkClass(){ Employee = "Irina Gritsenko", Department = "GeekBrains"},
+                new WorkClass(){ Employee = "Arina Gritsenko", Department = "GeekBrains"}
             };
             ed_Homework.ItemsSource = _workClasses;
-            //_workClasses.ListChanged += _workClasses_ListChanged;
+            _workClasses.ListChanged += _workClassesChanged;
         }
-
-        //private void _workClasses_ListChanged(object sender, ListChangedEventArgs e)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
+        private void _workClassesChanged(object sender, ListChangedEventArgs e)
+        {
+            switch (e.ListChangedType)
+            {
+                case ListChangedType.ItemAdded:
+                    break;
+                case ListChangedType.ItemDeleted:
+                    break;
+                case ListChangedType.ItemChanged:
+                    break;
+            }
+        }
     }
 }
