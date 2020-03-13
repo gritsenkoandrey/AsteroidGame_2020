@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-        <DataGrid x:Name="ed_Homework" FontSize="20" FontWeight="Bold" Margin="10" AutoGenerateColumns="False" FontStyle="Italic">
+        <DataGrid x:Name="ed_Homework" FontSize="20" FontWeight="Bold" AutoGenerateColumns="False" FontStyle="Italic">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path = Employee}" IsReadOnly="False" Header="Employee" Width="380"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path = Department}" IsReadOnly="False" Header="Department" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path = Employee}" IsReadOnly="False" Header="Employee" Width="380"/>
+                <DataGridTextColumn Binding="{Binding Path = Department}" IsReadOnly="False" Header="Department" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

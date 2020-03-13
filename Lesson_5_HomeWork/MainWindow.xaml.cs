@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Lesson_5_HomeWork.Work;
-using System.ComponentModel;
+using  System.Collections.Specialized;
 
 namespace Lesson_5_HomeWork
 {
@@ -22,33 +10,56 @@ namespace Lesson_5_HomeWork
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BindingList<WorkClass> _workClasses;
+        private ObservableCollection<WorkClass> _workClasses;
+
+        //private BindingList<WorkClass> _workClasses;
         public MainWindow()
         {
             InitializeComponent();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _workClasses = new BindingList<WorkClass>()
+            //_workClasses = new BindingList<WorkClass>()
+            _workClasses = new ObservableCollection<WorkClass>()
             {
                 new WorkClass(){ Employee = "Andrey Gritsenko", Department = "GeekBrains"},
                 new WorkClass(){ Employee = "Irina Gritsenko", Department = "GeekBrains"},
                 new WorkClass(){ Employee = "Arina Gritsenko", Department = "GeekBrains"}
             };
             ed_Homework.ItemsSource = _workClasses;
-            _workClasses.ListChanged += _workClassesChanged;
+            //_workClasses.ListChanged += _workClassesChanged;
+            _workClasses.CollectionChanged += _workClasses_CollectionChanged;
+
         }
-        private void _workClassesChanged(object sender, ListChangedEventArgs e)
+        private void _workClasses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.ListChangedType)
+            switch (e.Action)
             {
-                case ListChangedType.ItemAdded:
+                case NotifyCollectionChangedAction.Add:
+                    MessageBox.Show("Вы добавили");
                     break;
-                case ListChangedType.ItemDeleted:
+                case NotifyCollectionChangedAction.Remove:
+                    MessageBox.Show("Вы удалили");
                     break;
-                case ListChangedType.ItemChanged:
+                case NotifyCollectionChangedAction.Replace:
+                    MessageBox.Show("Вы заменили");
                     break;
             }
         }
+        //private void _workClassesChanged(object sender, ListChangedEventArgs e)
+        //{
+        //    switch (e.ListChangedType)
+        //    {
+        //        case ListChangedType.ItemAdded:
+        //            MessageBox.Show("Вы добавили элемент");
+        //            break;
+        //        case ListChangedType.ItemDeleted:
+        //            MessageBox.Show("Вы удалили элемент");
+        //            break;
+        //        case ListChangedType.ItemChanged:
+        //            MessageBox.Show("Вы изменили элемент");
+        //            break;
+        //    }
+        //}
     }
 }

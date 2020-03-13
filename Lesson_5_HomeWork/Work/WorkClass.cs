@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Reflection;
 
 namespace Lesson_5_HomeWork.Work
 {
@@ -17,7 +12,11 @@ namespace Lesson_5_HomeWork.Work
             get { return _employee; }
             set
             {
-                _employee = value;
+                if (_employee != value)
+                {
+                    _employee = value;
+                    OnPropertyChanged("Employee");
+                }
             }
         }
         public string Department
@@ -25,9 +24,17 @@ namespace Lesson_5_HomeWork.Work
             get { return _department; }
             set
             {
-                _department = value;
+                if (_department != value)
+                {
+                    _department = value;
+                    OnPropertyChanged("Department");
+                }
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
