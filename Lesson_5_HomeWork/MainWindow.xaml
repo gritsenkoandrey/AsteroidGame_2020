@@ -14,4 +14,14 @@
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
+
+    <!--<ListView x:Name="ed_Homework" Height="200" VerticalAlignment="Top" Width="770" Margin="10,10" ItemsSource="{Binding Path=ObservableEmployees, ElementName=EmployeesWindow, NotifyOnSourceUpdated=True}">
+        <ListView.View>
+            <GridView >
+                <GridViewColumn x:Name="Employee" DisplayMemberBinding="{Binding Path = Employee}" Header="Employee" Width="335"/>
+                <GridViewColumn x:Name="Department" DisplayMemberBinding="{Binding Path = Department}" Header="Department" Width="335"/>
+            </GridView>
+        </ListView.View>
+    </ListView>-->
+
 </Window>

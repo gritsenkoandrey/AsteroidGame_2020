@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using Lesson_5_HomeWork.Work;
-using  System.Collections.Specialized;
+using System.Collections.Specialized;
 
 namespace Lesson_5_HomeWork
 {
@@ -26,6 +26,7 @@ namespace Lesson_5_HomeWork
                 new WorkClass(){ Employee = "Irina Gritsenko", Department = "GeekBrains"},
                 new WorkClass(){ Employee = "Arina Gritsenko", Department = "GeekBrains"}
             };
+            
             ed_Homework.ItemsSource = _workClasses;
             //_workClasses.ListChanged += _workClassesChanged;
             _workClasses.CollectionChanged += _workClasses_CollectionChanged;
