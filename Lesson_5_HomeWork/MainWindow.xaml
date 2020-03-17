@@ -6,22 +6,27 @@
         xmlns:local="clr-namespace:Lesson_5_HomeWork"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="20 8 20 8" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="30" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        <DataGrid x:Name="ed_Homework" FontSize="20" FontWeight="Bold" AutoGenerateColumns="False" FontStyle="Italic">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="ed_Homework" FontSize="20" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path = Employee}" IsReadOnly="False" Header="Employee" Width="380"/>
                 <DataGridTextColumn Binding="{Binding Path = Department}" IsReadOnly="False" Header="Department" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel HorizontalAlignment="Center"  Grid.Row="1" Orientation="Horizontal">
+            <Button x:Name="updateButton" Content="Обновить" Click="updateButton_Click"/>
+            <Button x:Name="deleteButton" Content="Удалить" Click="deleteButton_Click"/>
+        </StackPanel>
     </Grid>
-
-    <!--<ListView x:Name="ed_Homework" Height="200" VerticalAlignment="Top" Width="770" Margin="10,10" ItemsSource="{Binding Path=ObservableEmployees, ElementName=EmployeesWindow, NotifyOnSourceUpdated=True}">
-        <ListView.View>
-            <GridView >
-                <GridViewColumn x:Name="Employee" DisplayMemberBinding="{Binding Path = Employee}" Header="Employee" Width="335"/>
-                <GridViewColumn x:Name="Department" DisplayMemberBinding="{Binding Path = Department}" Header="Department" Width="335"/>
-            </GridView>
-        </ListView.View>
-    </ListView>-->
-
 </Window>
