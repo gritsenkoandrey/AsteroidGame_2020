@@ -15,7 +15,7 @@ namespace Lesson_5_HomeWork
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableCollection<WorkClass> _workClasses;
+        //private ObservableCollection<WorkClass> _workClasses;
 
         readonly string connectionString;
         SqlDataAdapter adapter;
@@ -27,7 +27,6 @@ namespace Lesson_5_HomeWork
             InitializeComponent();
             connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             ed_Homework.RowEditEnding += PhonesGrid_RowEditEnding;
-
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -53,7 +52,6 @@ namespace Lesson_5_HomeWork
                 connection.Open();
                 adapter.Fill(_dataTable);
                 ed_Homework.ItemsSource = _dataTable.DefaultView;
-
             }
             catch (Exception ex)
             {
@@ -71,11 +69,8 @@ namespace Lesson_5_HomeWork
             //    new WorkClass(){ Employee = "Arina Gritsenko", Department = "GeekBrains"}
             //};
             //ed_Homework.ItemsSource = _workClasses;
-
-
-            //_workClasses.ListChanged += _workClassesChanged;
             //_workClasses.CollectionChanged += _workClasses_CollectionChanged;
-
+            //_workClasses.ListChanged += _workClassesChanged;
         }
         //private void _workClasses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         //{
