@@ -17,7 +17,7 @@ namespace Lesson_5_HomeWork
     {
         private ObservableCollection<WorkClass> _workClasses;
 
-        string connectionString;
+        readonly string connectionString;
         SqlDataAdapter adapter;
         DataTable _dataTable;
 
@@ -32,6 +32,7 @@ namespace Lesson_5_HomeWork
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //_workClasses = new BindingList<WorkClass>()
+            
             string sql = "SELECT * FROM dataGrid";
             _dataTable = new DataTable();
             SqlConnection connection = null;
@@ -42,7 +43,7 @@ namespace Lesson_5_HomeWork
                 adapter = new SqlDataAdapter(command);
 
                 // установка команды на добавление для вызова хранимой процедуры
-                adapter.InsertCommand = new SqlCommand("dataGrid", connection);
+                adapter.InsertCommand = new SqlCommand("procedure", connection);
                 adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
                 adapter.InsertCommand.Parameters.Add(new SqlParameter("@employee", SqlDbType.NVarChar, 50, "Employee"));
                 adapter.InsertCommand.Parameters.Add(new SqlParameter("@department", SqlDbType.NVarChar, 50, "Department"));
@@ -52,6 +53,7 @@ namespace Lesson_5_HomeWork
                 connection.Open();
                 adapter.Fill(_dataTable);
                 ed_Homework.ItemsSource = _dataTable.DefaultView;
+
             }
             catch (Exception ex)
             {
@@ -62,14 +64,15 @@ namespace Lesson_5_HomeWork
                 if (connection != null)
                     connection.Close();
             }
-            _workClasses = new ObservableCollection<WorkClass>()
-            {
-                new WorkClass(){ Employee = "Andrey Gritsenko", Department = "GeekBrains"},
-                new WorkClass(){ Employee = "Irina Gritsenko", Department = "GeekBrains"},
-                new WorkClass(){ Employee = "Arina Gritsenko", Department = "GeekBrains"}
-            };
-            
-            ed_Homework.ItemsSource = _workClasses;
+            //_workClasses = new ObservableCollection<WorkClass>()
+            //{
+            //    new WorkClass(){ Employee = "Andrey Gritsenko", Department = "GeekBrains"},
+            //    new WorkClass(){ Employee = "Irina Gritsenko", Department = "GeekBrains"},
+            //    new WorkClass(){ Employee = "Arina Gritsenko", Department = "GeekBrains"}
+            //};
+            //ed_Homework.ItemsSource = _workClasses;
+
+
             //_workClasses.ListChanged += _workClassesChanged;
             //_workClasses.CollectionChanged += _workClasses_CollectionChanged;
 
@@ -106,7 +109,7 @@ namespace Lesson_5_HomeWork
         //}
         private void UpdateDB()
         {
-            SqlCommandBuilder comandbuilder = new SqlCommandBuilder(adapter);
+            var comandbuilder = new SqlCommandBuilder(adapter);
             adapter.Update(_dataTable);
         }
         private void updateButton_Click(object sender, RoutedEventArgs e)
