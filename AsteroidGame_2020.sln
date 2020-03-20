@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsteroidGame_2020", "Astero
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson_5_HomeWork", "Lesson_5_HomeWork\Lesson_5_HomeWork.csproj", "{ED822894-E90C-423D-9682-055B735DF549}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseLesson-7", "DataBaseLesson-7\DataBaseLesson-7.csproj", "{565AA7D5-7ACC-4093-A247-AD272C5502A3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{ED822894-E90C-423D-9682-055B735DF549}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED822894-E90C-423D-9682-055B735DF549}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED822894-E90C-423D-9682-055B735DF549}.Release|Any CPU.Build.0 = Release|Any CPU
-		{565AA7D5-7ACC-4093-A247-AD272C5502A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{565AA7D5-7ACC-4093-A247-AD272C5502A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{565AA7D5-7ACC-4093-A247-AD272C5502A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{565AA7D5-7ACC-4093-A247-AD272C5502A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

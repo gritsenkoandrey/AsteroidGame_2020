@@ -15,13 +15,10 @@ namespace Lesson_5_HomeWork
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private ObservableCollection<WorkClass> _workClasses;
-
         readonly string connectionString;
         SqlDataAdapter adapter;
         DataTable _dataTable;
 
-        //private BindingList<WorkClass> _workClasses;
         public MainWindow()
         {
             InitializeComponent();
@@ -30,7 +27,6 @@ namespace Lesson_5_HomeWork
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //_workClasses = new BindingList<WorkClass>()
             
             string sql = "SELECT * FROM dataGrid";
             _dataTable = new DataTable();
@@ -62,46 +58,7 @@ namespace Lesson_5_HomeWork
                 if (connection != null)
                     connection.Close();
             }
-            //_workClasses = new ObservableCollection<WorkClass>()
-            //{
-            //    new WorkClass(){ Employee = "Andrey Gritsenko", Department = "GeekBrains"},
-            //    new WorkClass(){ Employee = "Irina Gritsenko", Department = "GeekBrains"},
-            //    new WorkClass(){ Employee = "Arina Gritsenko", Department = "GeekBrains"}
-            //};
-            //ed_Homework.ItemsSource = _workClasses;
-            //_workClasses.CollectionChanged += _workClasses_CollectionChanged;
-            //_workClasses.ListChanged += _workClassesChanged;
         }
-        //private void _workClasses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //    switch (e.Action)
-        //    {
-        //        case NotifyCollectionChangedAction.Add:
-        //            MessageBox.Show("Вы добавили");
-        //            break;
-        //        case NotifyCollectionChangedAction.Remove:
-        //            MessageBox.Show("Вы удалили");
-        //            break;
-        //        case NotifyCollectionChangedAction.Replace:
-        //            MessageBox.Show("Вы заменили");
-        //            break;
-        //    }
-        //}
-        //private void _workClassesChanged(object sender, ListChangedEventArgs e)
-        //{
-        //    switch (e.ListChangedType)
-        //    {
-        //        case ListChangedType.ItemAdded:
-        //            MessageBox.Show("Вы добавили элемент");
-        //            break;
-        //        case ListChangedType.ItemDeleted:
-        //            MessageBox.Show("Вы удалили элемент");
-        //            break;
-        //        case ListChangedType.ItemChanged:
-        //            MessageBox.Show("Вы изменили элемент");
-        //            break;
-        //    }
-        //}
         private void UpdateDB()
         {
             var comandbuilder = new SqlCommandBuilder(adapter);
