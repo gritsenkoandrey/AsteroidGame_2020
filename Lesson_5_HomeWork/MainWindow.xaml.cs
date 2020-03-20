@@ -27,10 +27,10 @@ namespace Lesson_5_HomeWork
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
             string sql = "SELECT * FROM dataGrid";
             _dataTable = new DataTable();
             SqlConnection connection = null;
+
             try
             {
                 connection = new SqlConnection(connectionString);
